@@ -4,6 +4,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from app.config import config
+from app.auth.views import auth_bp
 
 bootstrap = Bootstrap()
 mail = Mail()
@@ -12,6 +13,7 @@ db = SQLAlchemy()
 
 def create_app(config_name):
     app = Flask(__name__)
+    app.register_blueprint(auth_bp)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
