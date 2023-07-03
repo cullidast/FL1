@@ -1,25 +1,30 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from app.config import config
 from app.auth.views import auth_bp
+from flask_login import LoginManager
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 def create_app(config_name):
     app = Flask(__name__)
-    app.register_blueprint(auth_bp)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+
 
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
+    login_manager.init_app(app)
+
+    app.register_blueprint(auth_bp)
 
     return app

@@ -1,5 +1,7 @@
-from flask import Blueprint
+from flask import Flask
 
-main = Blueprint('main', __name__)
+app = Flask(__name__)
 
-from . import views, errors
+from .main import main
+app.register_blueprint(main)
+
